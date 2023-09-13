@@ -1,0 +1,23 @@
+#bg,
+#bg-login {
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#bg {
+    background: url("../assets/bg.jpg");
+    background-position: center;
+
+}
+
+#bg-login {
+    background: url("../assets/bg-login.jpg");
+    background-position: center;
+}
+
+/* #login-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+} */
