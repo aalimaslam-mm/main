@@ -15,7 +15,9 @@ function App() {
     let loggedInP = protectRoute();
     setLoggedIn(loggedInP);
     if (!loggedIn) {
-      navigate("/login")
+      if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
+        navigate("/login")
+      }
     }
   }, [loggedIn, navigate]);
 
