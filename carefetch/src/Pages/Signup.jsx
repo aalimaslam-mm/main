@@ -1,8 +1,6 @@
-import React from 'react'
-import axios from 'axios'
 import './index.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from "react-toastify";
+import Auth from '../Modules/Auth';
 export default function Signup() {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -16,17 +14,11 @@ export default function Signup() {
             dateOfBirth: dateOfBirth.value,
             userType: 'patient'
         }
-        try {
-            let response = await axios.post("http://localhost:5500/register", data);
-            if (response.status === 200) {
-                toast.success("Registration Successfull")
-                navigate('/login')
-            } else {
-                toast.error("Registration Failed")
-            }
-        } catch (e) {
-            toast.error(e.response?.data)
+        let response = await Auth.register(data);
+        if (response === "success") {
+            navigate("/login")
         }
+
     }
     const handlePasswordChange = (e) => {
         const confirmPassword = e.target.value;
@@ -39,7 +31,6 @@ export default function Signup() {
     }
     return (
         <div id="bg">
-
             <div className="container my-4 p-4">
                 <div className="row justify-content-center">
                     <div className="col-md-6 col-12">
