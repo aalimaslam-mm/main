@@ -1,9 +1,19 @@
-import axios from 'axios';
-import React from 'react'
+
 import './index.css'
-import { Link } from 'react-router-dom';
-import { toast } from "react-toastify"
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Auth from '../Modules/Auth';
+import protectRoute from '../Utils/protected';
 export default function Login() {
+    let [loggedIn, setLoggedIn] = useState(false);
+    let navigate = useNavigate();
+    useEffect(() => {
+        let loggedIns = protectRoute();
+        setLoggedIn(loggedIns);
+        if (loggedIn) {
+            navigate("/")
+        }
+    }, [navigate, loggedIn])
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { email, password } = e.target.elements;
@@ -11,16 +21,9 @@ export default function Login() {
             email: email.value,
             password: password.value,
         }
-        try {
-            let response = await axios.post("http://localhost:5500/login", data);
-            if (response.status === 200) {
-                toast.success("Login Successfull")
-            } else {
-                console.log(response)
-                toast.error("Login Failed")
-            }
-        } catch (e) {
-            toast.error(e.response.data)
+        let response = await Auth.login(data);
+        if (response === "success") {
+            navigate("/")
         }
     }
     return (

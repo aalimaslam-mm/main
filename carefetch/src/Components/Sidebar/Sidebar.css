@@ -1,0 +1,8 @@
+.sidebarLinks li a {
+    padding: 10px 0;
+}
+
+.sidebarLinks li a:hover {
+    background: #111;
+    border-radius: 5px;
+}
