@@ -66,7 +66,6 @@ function Stats({ dataLength }) {
 }
 
 function Appointments({ dataLength }) {
-    console.log(dataLength);
     return (
         <div className="my-5">
             <h3>Appointments</h3>
