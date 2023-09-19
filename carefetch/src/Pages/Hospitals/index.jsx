@@ -68,9 +68,11 @@ export default function Index() {
 }
 function Card({ data, from }) {
     return (
-        <div className="card col-md-6 col-lg-4 col-12 mt-3">
+        <div className="card col-md-6 col-lg-3 col-12 mt-3 z-0">
             <div className="card-body">
-                <h5 className="card-title">{data?.Name}</h5>
+                <h5 className="card-title">{data.Name ? data.Name : data.name}</h5>
+                <h5 className="text-muted h6">{data.Specialization ? data.Specialization : null} Doctors</h5>
+                {data.fee ? (<h5 className="text-muted h6">{data.fee} &#8377;</h5>) : null}
                 {data?.Description ? <p className="text-muted">{data?.Description}</p> : null}
                 <div>
                     {data?.ContactNumber ? (<p className="my-0">Phone Number : {data?.ContactNumber}</p>) : null}

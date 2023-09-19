@@ -40,13 +40,26 @@ export default function Hospital() {
             }
             closeDialog();
         })
+    };
+
+    const handleDelete = () => {
+        let s = confirm("Are you sure you want to delete this Hospital");
+        if (!s) return;
+        HospitalModule.deleteHospital(hospital?.HospitalID, (response) => {
+            if (response.status == 200) {
+                toast.success("Hospital Deleted Successfully")
+                window.location.href = "/hospitals"
+            } else if (response?.response?.status == 401) {
+                toast.error("You are not Authorized to Delete Hospital")
+            }
+        })
     }
 
     return (
         <div className='p-4'>
             <div className="row p-4 rounded-1" style={{ backgroundColor: "rgba(255,100,200,0.2)", }}>
 
-                <div className='col-10'>
+                <div className='col-9'>
 
                     <div className='h1'>{hospital?.Name}</div>
                     <div className='h3'>{hospital?.speciality} Hospital</div>
@@ -65,8 +78,9 @@ export default function Hospital() {
                     </div>
                 </div>
                 {
-                    User?.getUser()?.UserType.toLowerCase() == "admin" ? (<div className='col-2'>
+                    User?.getUser()?.UserType.toLowerCase() == "admin" ? (<div className='col-3 gap-1 d-flex align-items-start justify-content-center'>
                         <button className='btn btn-outline-dark' onClick={() => setOpen(true)}>Edit Hospital</button>
+                        <button className='btn btn-outline-danger' onClick={handleDelete}>Delete Hospital</button>
                     </div>) : null
                 }
             </div>

@@ -56,6 +56,16 @@ class Hospital {
             callBack(err)
         })
     }
+    deleteHospital(id, callBack) {
+        CareFetch({
+            method: "delete",
+            url: `/hospitals/${id}`,
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
 }
 
 export default new Hospital();

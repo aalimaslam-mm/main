@@ -24,7 +24,7 @@ function App() {
     setLoggedIn(loggedInP);
     if (!loggedIn) {
       if (window.location.pathname !== "/login" && window.location.pathname !== "/register" && window.location.pathname !== "/logout") {
-        navigate("/login")
+        navigate("/login");
       }
     }
   }, [loggedIn, navigate]);

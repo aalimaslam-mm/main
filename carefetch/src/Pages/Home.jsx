@@ -99,11 +99,10 @@ function UserDashboard({ details, type }) {
     let [appointments, setAppointments] = useState([])
     useEffect(() => {
         PatientModule.getAllAppointments((response) => {
-            if (response?.response?.status == 401) return navigate("/logout")
-            if (response?.response?.status == 404) toast.info("No Appointments Found");
+            if (response?.response?.status == 401) return navigate("/logout");
             setAppointments(response?.data)
         })
-    }, [navigate])
+    }, [navigate]);
     return (
         <div className="p-4">
             <h1>{type} Dashboard</h1>
@@ -133,6 +132,7 @@ function Hospitals({ details }) {
     useEffect(() => {
         HospitalModule.getDataLength((response) => {
             setHospitalsDataLen(response?.data?.count);
+            console.log(response?.data?.count)
         })
     }, [])
     return (
