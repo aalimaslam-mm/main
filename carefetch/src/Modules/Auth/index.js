@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 class Auth {
     async login(data) {
         try {
-            let response = await axios.post("http://localhost:5500/login", data);
+            let response = await axios.post("http://localhost:5503/login", data);
             if (response.status === 200) {
                 toast.success("Login Successfull");
                 localStorage.setItem("token", response.data.token);
@@ -21,7 +21,7 @@ class Auth {
     }
     async register(data) {
         try {
-            let response = await axios.post("http://localhost:5500/register", data);
+            let response = await axios.post("http://localhost:5503/register", data);
             if (response.status === 200) {
                 toast.success("Registration Successfull")
                 return "success"

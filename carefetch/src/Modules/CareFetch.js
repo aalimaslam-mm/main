@@ -27,7 +27,7 @@ const CareFetch = (config) => {
                     status: 500,
                 };
             }
-            if (error.response.status === 400) {
+            if (error.response.status === 401) {
                 User.logout();
                 throw error;
             }

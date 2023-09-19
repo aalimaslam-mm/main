@@ -16,13 +16,13 @@ function User() {
                 <div className="row my-4">
                     {users && users.map((user, index) => {
                         return (
-                            <Link to={`/solo-users`} state={user} className="col-md-3 col-12" key={index} style={{ textDecoration: "none" }}>
+                            <Link to={`/solo-users`} state={user} className="col-md-3 col-12 my-2" key={index} style={{ textDecoration: "none" }}>
                                 <div className="" key={index}>
-                                    <div className="card p-4 text-center" style={{ background: "rgba(150, 100,255,0.2)" }}>
-                                        <div className="fw-bold py-2">{user.userType}</div>
-                                        <div className="card-title">{user.username}</div>
-                                        <div className="card-title">{user.email}</div>
-                                        <div className="card-title">{user.userId}</div>
+                                    <div className="card p-4 text-center" style={{ background: `rgba(50,${5 * index + 10}, 255,0.2)` }}>
+                                        <div className="fw-bold py-2">{user.UserType.toUpperCase()}</div>
+                                        <div className="card-title">{user.Username}</div>
+                                        <div className="card-title">{user.Email}</div>
+                                        <div className="card-title">{user.UserID}</div>
                                     </div>
                                 </div>
                             </Link>
