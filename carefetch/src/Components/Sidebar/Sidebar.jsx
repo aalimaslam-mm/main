@@ -6,39 +6,143 @@ import { Link } from 'react-router-dom';
 import "./Sidebar.css"
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+// import { imgSrc } from "../../assets/bg-login.jpg";
+import { ImLab } from "react-icons/im"
+import { RxAvatar } from "react-icons/rx";
+import { BiLogOut } from "react-icons/bi";
 export default function Sidebar() {
 
-    let [hovered, setHovered] = useState(false)
-    let links = [
-        {
-            text: "Home",
-            icon: <AiFillHome />,
-            link: "/"
-        },
-        {
-            text: "Patients",
-            link: "/patients",
-        },
-        {
-            text: "Doctors",
-            icon: <FaUserDoctor />,
-            link: "/doctors"
-        },
-        {
-            text: "Hospitals",
-            icon: <BsFillHospitalFill />,
-            link: "/hospitals"
-        },
-        {
-            text: "Appointments",
-            icon: <SlCalender />,
-            link: "/appointments"
-        }
+    let [hovered, setHovered] = useState(false);
+    let [user, setUser] = useState({})
 
-    ]
     useEffect(() => {
-
+        let user = JSON.parse(localStorage.getItem("user"));
+        setUser(user);
     }, [])
+
+    function sideBarLinks() {
+        let sideBarLinks = [];
+        if (user?.UserType?.toLowerCase() === "admin") {
+            sideBarLinks = [
+                {
+                    text: "Home",
+                    icon: <AiFillHome />,
+                    link: "/"
+                },
+                {
+                    text: "Patients",
+                    link: "/patients",
+                },
+                {
+                    text: "Labs",
+                    icon: <ImLab />,
+                    link: "/labs"
+                },
+                {
+                    text: "Hospitals",
+                    icon: <BsFillHospitalFill />,
+                    link: "/hospitals"
+                },
+                {
+                    text: "Appointments",
+                    icon: <SlCalender />,
+                    link: "/appointments"
+                }, {
+                    text: "Logout",
+                    icon: <BiLogOut />,
+                    link: "/logout"
+                },
+            ]
+        } else if (user?.UserType?.toLowerCase() == "patient") {
+            sideBarLinks = [
+                {
+                    text: "Home",
+                    icon: <AiFillHome />,
+                    link: "/"
+                },
+                {
+                    text: "Hospitals",
+                    icon: <BsFillHospitalFill />,
+                    link: "/hospitals"
+                },
+                {
+                    text: "Labs",
+                    icon: <ImLab />,
+                    link: "/labs"
+                },
+                {
+                    text: "Appointments",
+                    icon: <SlCalender />,
+                    link: "/appointments"
+                },
+                {
+                    text: "Logout",
+                    icon: <BiLogOut />,
+                    link: "/logout"
+                },
+            ]
+        } else if (user?.UserType?.toLowerCase() == "lab") {
+            sideBarLinks = [
+                {
+                    text: "Home",
+                    icon: <AiFillHome />,
+                    link: "/"
+                },
+                {
+                    text: "Patients",
+                    link: "/patients",
+                },
+                {
+                    text: "Appointments",
+                    icon: <SlCalender />,
+                    link: "/appointments"
+                },
+                {
+                    text: "Logout",
+                    icon: <BiLogOut />,
+                    link: "/logout"
+                },
+            ]
+        } else if (user?.UserType?.toLowerCase() == "hospital") {
+            sideBarLinks = [
+                {
+                    text: "Home",
+                    icon: <AiFillHome />,
+                    link: "/"
+                },
+                {
+                    text: "Patients",
+                    link: "/patients",
+                },
+                {
+                    text: "Doctors",
+                    icon: <FaUserDoctor />,
+                    link: "/doctors"
+                },
+                {
+                    text: "Labs",
+                    icon: <ImLab />,
+                    link: "/labs"
+                },
+                {
+                    text: "Appointments",
+                    icon: <SlCalender />,
+                    link: "/appointments"
+                },
+                {
+                    text: "Logout",
+                    icon: <BiLogOut />,
+                    link: "/logout"
+                },
+            ]
+        }
+        return sideBarLinks;
+    }
+
+    let links = sideBarLinks();
+
+
+
     const openSidebar = () => {
         setHovered(true);
     }
@@ -48,7 +152,7 @@ export default function Sidebar() {
     }
     return (
         <>
-            <div className="sidebar p-3 bg-black h-100 position-fixed top-0 " style={{ width: "150px", transition: "all .4s", left: hovered ? "0px" : "-100px" }} onMouseLeave={closeSidebar} onMouseEnter={openSidebar}>
+            <div className="sidebar p-3 bg-black h-100 position-fixed top-0 z-1" style={{ width: "150px", transition: "all .4s", left: hovered ? "0px" : "-100px" }} onMouseLeave={closeSidebar} onMouseEnter={openSidebar}>
                 <div className='h-100 d-flex flex-column justify-content-between h-100'>
                     <div className='Logo d-flex justify-content-center align-items-center' style={{ height: "200px" }}>
                         <img src="https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png" alt="logo" style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover" }} />
@@ -68,7 +172,14 @@ export default function Sidebar() {
                     </ul>
                 </div>
             </div>
-            <div className="mainContent" style={{ marginLeft: hovered ? "155px" : "55px", transition: "all .4s" }}>
+            <div className="position-fixed fixed-top w-100 bg-black py-3 z-0 d-flex justify-content-end px-5">
+                <div className=''>
+                    <Link to="/profile" style={{ color: "white" }}>
+                        <RxAvatar style={{ fontSize: "3rem" }} />
+                    </Link>
+                </div>
+            </div>
+            <div className="mainContent" style={{ marginLeft: hovered ? "155px" : "55px", marginTop: "100px", transition: "all .4s" }}>
                 <Outlet />
             </div>
         </>

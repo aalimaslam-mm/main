@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Auth from '../Modules/Auth';
 import protectRoute from '../Utils/protected';
+import { toast } from 'react-toastify';
 export default function Login() {
     let [loggedIn, setLoggedIn] = useState(false);
     let navigate = useNavigate();
@@ -24,6 +25,8 @@ export default function Login() {
         let response = await Auth.login(data);
         if (response === "success") {
             navigate("/")
+        } else {
+            toast.error("Login Failed")
         }
     }
     return (
