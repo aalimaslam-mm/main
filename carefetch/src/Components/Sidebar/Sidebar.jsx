@@ -42,11 +42,6 @@ export default function Sidebar() {
                     text: "Hospitals",
                     icon: <BsFillHospitalFill />,
                     link: "/hospitals"
-                },
-                {
-                    text: "Appointments",
-                    icon: <SlCalender />,
-                    link: "/appointments"
                 }, {
                     text: "Logout",
                     icon: <BiLogOut />,

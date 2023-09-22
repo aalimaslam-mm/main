@@ -1,0 +1,17 @@
+.btn-new {
+    border: 1px solid #339999;
+    color: #339999;
+    min-width: 150px;
+    padding: 6px 10px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.btn-new:hover {
+    background-color: #339999;
+    color: white;
+}
+
+.search {
+    width: 50% !important;
+}

@@ -1,15 +1,18 @@
 import axios from "axios";
 import serverConfig from "../Config";
 import User from "./User";
+import Auth from "./Auth";
 
 const appServerURL = serverConfig.appServerUrl;
 const CareFetch = (config) => {
-    const token = User.getToken();
+    const token = User?.getToken();
+    const refreshToken = User?.getRefreshToken();
     if (token != null) {
         config.headers = {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "*",
             authorization: token,
+            refreshToken
         };
     }
 
@@ -19,7 +22,7 @@ const CareFetch = (config) => {
         },
         function (error) {
             if (error.response.data == "Invalid Token") {
-                User.logout();
+                Auth.logout();
             }
             if (!error.response) {
                 error.response = {
@@ -28,7 +31,7 @@ const CareFetch = (config) => {
                 };
             }
             if (error.response.status === 401) {
-                User.logout();
+                Auth.logout();
                 throw error;
             }
             return Promise.reject(error);
