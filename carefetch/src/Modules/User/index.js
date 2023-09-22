@@ -55,6 +55,9 @@ class User {
             callBack(err)
         })
     }
+    getRefreshToken() {
+        return localStorage.getItem("refreshToken");
+    }
 }
 
 export default new User()

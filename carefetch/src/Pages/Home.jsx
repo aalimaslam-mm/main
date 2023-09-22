@@ -112,12 +112,6 @@ function UserDashboard({ details, type }) {
 
 }
 
-function PatientBody() {
-    return (
-        <div>hei</div>
-    )
-}
-
 
 
 // Labs
@@ -132,7 +126,6 @@ function Hospitals({ details }) {
     useEffect(() => {
         HospitalModule.getDataLength((response) => {
             setHospitalsDataLen(response?.data?.count);
-            console.log(response?.data?.count)
         })
     }, [])
     return (

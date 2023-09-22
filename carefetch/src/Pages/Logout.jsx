@@ -1,7 +1,11 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import Auth from "../Modules/Auth";
+import { toast } from "react-toastify";
 export default function Logout() {
+
     let navigate = useNavigate();
-    localStorage.clear();
+    Auth.logout();
+    toast.success("Logged out successfully");
     navigate("/login");
     return null
 }

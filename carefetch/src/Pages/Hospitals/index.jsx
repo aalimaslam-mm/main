@@ -7,7 +7,8 @@ import { toast } from 'react-toastify';
 export default function Index() {
     let [hospitals, setHospitals] = React.useState([]);
     let [open, setOpen] = React.useState(false);
-    let [data, setData] = React.useState({})
+    let [data, setData] = React.useState({});
+    let [user, setUser] = React.useState(JSON.parse(localStorage.getItem("user")))
     React.useEffect(() => {
         (async function () {
             await Hospitals.getAllHospitals((response) => {
@@ -58,9 +59,11 @@ export default function Index() {
                         </div>
                     ) : ("No Hospitals Found")}</div>
                 </div>
-                <div className="col-2">
-                    <button className='btn btn-info rounded-1' onClick={() => setOpen(true)}>Add Hospital</button>
-                </div>
+                {user.UserType.toLowerCase() == "admin" ? (
+                    <div className="col-2">
+                        <button className='btn btn-info rounded-1' onClick={() => setOpen(true)}>Add Hospital</button>
+                    </div>
+                ) : null}
                 <Dialog open={open} closeDialog={closeDialog} handleSubmit={handleSubmit} handleChange={handleChange} />
             </div>
         </>

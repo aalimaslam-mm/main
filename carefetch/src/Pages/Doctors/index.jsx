@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import Doctors from '../../Modules/Doctors'
-import { Card } from '../Hospitals';
 import { toast } from 'react-toastify';
 import User from '../../Modules/User';
+import { Link } from 'react-router-dom';
 
 export default function Index() {
     let [doctors, setDoctors] = React.useState([]);
@@ -46,11 +46,6 @@ export default function Index() {
             if (response?.data.length > 0) {
                 setDoctors(response?.data);
             }
-            // if (response?.data?.toLowerCase() == "no doctors found") {
-            //     setDoctors([]);
-            //     return;
-            // }
-            // setDoctors(response?.data);
         })
     }
 
@@ -91,6 +86,47 @@ export default function Index() {
         </div>
     )
 }
+
+function Card({ data }) {
+    return (
+        <div className="card m-4" style={{ width: "18rem" }}>
+            <div className="card-body">
+                <h5 className="card-title">Dr. {data?.name}</h5>
+                <h6 className="card-title text-muted">{data?.Specialization}</h6>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">Monday, Wednesday, Friday</li>
+                    <li className="list-group-item">5pm - 7pm</li>
+                </ul>
+
+            </div>
+            <div className="card-footer">
+                <button type="button" className="btn btn-new">Book an appointment</button>
+            </div>
+        </div>
+    )
+}
+
+function BookAppointment({ data, open }) {
+    return (
+        <div className="position-absolute top-0 start-0 modal modal-backdrop"
+            style={{ display: open ? "block" : "none", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content d-flex flex-column">
+                    <div className="modal-header">
+                        <div className="modal-title h3" id="exampleModalLabel">
+                            Book an Appointment
+                        </div>
+                    </div>
+                    <div className="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 function DoctorDialog({ open, closeDialog, handleChange, handleSubmit }) {
     return (
