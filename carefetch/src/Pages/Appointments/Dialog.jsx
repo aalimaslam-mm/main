@@ -108,7 +108,7 @@ function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handle
                             <select className="form-control" name="doctor" onChange={handleSelectDoctor}>
                                 <option value="nothing" selected>Select an Option</option>
                                 {doctors?.map((doctor, index) => (
-                                    <option key={index} value={doctor.DoctorID}>{doctor.name} - {doctor?.Specialization}</option>
+                                    <option key={index} value={doctor.DoctorID}>{doctor.name} - {doctor?.Specialization} - &#8377; {doctor?.fee}</option>
                                 ))}
                             </select>
                         </div>

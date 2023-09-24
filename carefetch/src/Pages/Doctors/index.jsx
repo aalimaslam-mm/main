@@ -61,10 +61,10 @@ export default function Index() {
     return (
         <div className='p-4'>
             <div className='row'>
-                <div className='col-12 p-4 rounded-2 bg-primary'>
+                <div className='col-12 p-4 rounded-2'>
                     <div className="row d-flex justify-content-center align-items-center gap-2">
                         <input type="text" id="search" placeholder='Search by Name | Speciality' onChange={handleSearch} className='form-control my-0 rounded-' />
-                        <button className='btn btn-warning rounded-1' onClick={() => setOpen(true)}>Add a Doctor</button>
+                        <button className='btn rounded-1 fw-bold text-uppercase' style={{ background: "#339999", color: "#fff" }} onClick={() => setOpen(true)}>Add a Doctor</button>
                     </div>
                 </div>
             </div>
@@ -88,20 +88,25 @@ export default function Index() {
 }
 
 function Card({ data }) {
+    let user = JSON.parse(localStorage.getItem("user"));
     return (
         <div className="card m-4" style={{ width: "18rem" }}>
             <div className="card-body">
                 <h5 className="card-title">Dr. {data?.name}</h5>
                 <h6 className="card-title text-muted">{data?.Specialization}</h6>
+                <h6 className='tw-bold'>&#8377; {data?.fee}</h6>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">Monday, Wednesday, Friday</li>
                     <li className="list-group-item">5pm - 7pm</li>
                 </ul>
 
             </div>
-            <div className="card-footer">
-                <button type="button" className="btn btn-new">Book an appointment</button>
-            </div>
+            {user?.UserType == "patient" ? (
+
+                <div className="card-footer">
+                    <button type="button" className="btn btn-new">Book an appointment</button>
+                </div>
+            ) : null}
         </div>
     )
 }
