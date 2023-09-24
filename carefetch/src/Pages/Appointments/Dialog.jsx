@@ -1,10 +1,12 @@
 import React from "react"
 import Patient from "../../Modules/Patients"
 import { toast } from "react-toastify";
+import Doctors from "../../Modules/Doctors";
 /* eslint-disable react/prop-types */
-function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handleSelectDoctor, selectedDoctor, selectedPatient, setSelecetedPatient }) {
+function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handleSelectDoctor, selectedDoctor, dateChange }) {
     let [existing, setExisting] = React.useState(false);
     let [data, setData] = React.useState([]);
+    let [message, setMessage] = React.useState("");
     const handleExisting = (e) => {
         if (e.target.value == "existing") {
             fetchPatients();
@@ -19,6 +21,19 @@ function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handle
             if (response.status == 404) return toast.error("No Patients Found")
             setData(response?.data);
         })
+    }
+    const fetchAvailibility = async (e) => {
+        let value = e.target.value;
+        let data3 = {
+            DoctorId: selectedDoctor.DoctorID,
+            day: value
+        }
+        await Doctors.getAvailablity(data3, (response) => {
+            setMessage(response?.data?.message);
+            let date = response?.data?.message?.split(" ");
+            date = date[date.length - 1];
+            dateChange(date);
+        });
     }
     return (
         <div className="position-absolute justify-content-center align-items-center" style={{ display: open ? "flex" : "none", background: "rgba(0,0,0,0.4)", inset: "0", zIndex: "1111" }}>
@@ -79,7 +94,7 @@ function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handle
                         <select name="PatientId" className="form-control mt-2" onChange={handleChange}>
                             <option value="nothing" selected disabled>Select a Patient</option>
                             {data?.length > 0 ? data?.map((patient, index) => (
-                                <option key={index} value={patient?.PatientId}>{patient?.PatientName}</option>
+                                <option key={index} value={patient?.PatientId}>{patient?.PatientName} - {patient?.PatientContact}</option>
                             )) : ("No Patients Found")}
                         </select>
                     )
@@ -103,12 +118,17 @@ function Dialog({ open, closeDialog, doctors, handleChange, handleSubmit, handle
                             <label htmlFor="appointmentDate">
                                 Appointment Day
                             </label>
-                            <select name="appointmentDate" className="form-control" id="appointmentDate" onChange={handleChange}>
+                            <select name="appointmentDate" className="form-control" id="appointmentDate" onChange={fetchAvailibility}>
                                 <option value="nothing" selected disabled>Select a Day</option>
                                 {selectedDoctor?.available_days?.split(",").map((day, index) => (
                                     <option key={index} value={day}>{day}</option>
                                 ))}
                             </select>
+                            {message ? (
+                                <div>
+                                    <p className="text-warning">{message}</p>
+                                </div>
+                            ) : null}
                         </div>
                     </div>
                 </div>

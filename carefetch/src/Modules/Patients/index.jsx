@@ -18,6 +18,7 @@ class Patient {
             method: "GET",
             url: `patients/hospital/${this.id}`
         }).then(response => {
+            console.log(response)
             callBack(response)
         }).catch(err => {
             callBack(err)

@@ -23,7 +23,7 @@ class Doctor {
             callBack(err)
         })
     }
-    getAvailibility(doctorId, callBack) {
+    getAvailableDays(doctorId, callBack) {
         CareFetch({
             method: "GET",
             url: `doctors-availibility/${doctorId}`
@@ -33,6 +33,18 @@ class Doctor {
             callBack(err)
         })
     }
+    getAvailablity(data, callBack) {
+        CareFetch({
+            method: "POST",
+            url: `doctors-availibility/check-availibility`,
+            data
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+
 }
 
 export default new Doctor();
