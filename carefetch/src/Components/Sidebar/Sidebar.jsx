@@ -30,10 +30,6 @@ export default function Sidebar() {
                     link: "/"
                 },
                 {
-                    text: "Patients",
-                    link: "/patients",
-                },
-                {
                     text: "Labs",
                     icon: <ImLab />,
                     link: "/labs"
@@ -106,18 +102,9 @@ export default function Sidebar() {
                     link: "/"
                 },
                 {
-                    text: "Patients",
-                    link: "/patients",
-                },
-                {
                     text: "Doctors",
                     icon: <FaUserDoctor />,
                     link: "/doctors"
-                },
-                {
-                    text: "Labs",
-                    icon: <ImLab />,
-                    link: "/labs"
                 },
                 {
                     text: "Appointments",

@@ -33,7 +33,7 @@ function Admin({ details }) {
         <div className="container-fluid">
             <h1>Admin Dashboard</h1>
             <Stats dataLength={dataLength} />
-            <Appointments dataLength={dataLength} />
+            {/* <Appointments dataLength={dataLength} /> */}
         </div>
     )
 }
