@@ -35,7 +35,7 @@ class Auth {
                         console.log("No refreshToken found in localStorage");
                     }
 
-                }, 1000 * 55)
+                }, 1000 * 60 * 60); // 1 hour
                 return "success"
             } else {
                 console.log(response)

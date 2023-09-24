@@ -119,7 +119,7 @@ function BookAppointment({ data, open }) {
                         </div>
                     </div>
                     <div className="modal-body">
-
+                        <input type="text" className="form-control" />
                     </div>
                 </div>
             </div>

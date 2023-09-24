@@ -14,6 +14,7 @@ export default function Index() {
     let [selectedPatient, setSelectedPatient] = React.useState({});
     let [completed, setCompleted] = React.useState([]);
     let [toShow, setToShow] = React.useState("all");
+    let [date, setDate] = React.useState(new Date());
     const closeDialog = () => {
         setOpen(false);
     }
@@ -53,11 +54,14 @@ export default function Index() {
         setAppointments(filteredData)
     }
     const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value })
+        setData({
+            ...data,
+            [e.target.name]: e.target.value,
+        })
     }
     const handleSelectDoctor = async (e) => {
         let selectedDoctor = await doctors.find((doctor) => doctor.DoctorID == e.target.value)
-        Doctors.getAvailibility(selectedDoctor.DoctorID, (response) => {
+        Doctors.getAvailableDays(selectedDoctor.DoctorID, (response) => {
             selectedDoctor = { ...selectedDoctor, ...response?.data }
             setSelectedDoctor(selectedDoctor);
         })
@@ -67,9 +71,10 @@ export default function Index() {
             ...data,
             DoctorId: selectedDoctor.DoctorID,
             HospitalId: selectedDoctor.HospitalId,
+            date
         }
         if (data.existing == "new") {
-            if (!data?.appointmentDate || !data?.patientName || !data?.age || !data?.gender || !data?.phoneNumber) {
+            if (!data?.patientName || !data?.age || !data?.gender || !data?.phoneNumber) {
                 toast.error("Please fill all the fields");
                 return
             }
@@ -109,10 +114,13 @@ export default function Index() {
         }
         setToShow(e.target.innerText.toLowerCase());
     }
+    const handleDateChange = (date) => {
+        setDate(date);
+    }
     return (
         <>
             <App appointments={appointments} handleChange={handleSearchChange} openDialog={openDialog} closeDialog={closeDialog} open={open} handleStatusChange={handleStatusChange} handleToShow={handleToShow} />
-            <Dialog open={open} closeDialog={closeDialog} doctors={doctors} handleSelectDoctor={handleSelectDoctor} selectedDoctor={selectedDoctor} handleChange={handleChange} handleSubmit={handleSubmit} setSelectedPatient={setSelectedPatient} selectedPatient={selectedPatient} />
+            <Dialog open={open} closeDialog={closeDialog} doctors={doctors} handleSelectDoctor={handleSelectDoctor} selectedDoctor={selectedDoctor} handleChange={handleChange} handleSubmit={handleSubmit} setSelectedPatient={setSelectedPatient} selectedPatient={selectedPatient} dateChange={handleDateChange} />
 
         </>
 
@@ -161,7 +169,7 @@ function TableRow({ data, index, handleStatusChange }) {
             <th scope="row">{index}</th>
             <td>{data.PatientName}</td>
             <td>{data.DoctorName}</td>
-            <td>{data.AppointmentDate}</td>
+            <td>{data.appointmentActualDate ? data.appointmentActualDate : data.AppointmentDate}</td>
             <td>
                 <select defaultValue={data?.Status} onChange={(e) => handleStatusChange(e, data.AppointmentID)} className="form-control w-50" name="Status" id="status">
                     <option value="First Visit" selected={data?.Status.toLowerCase() == "first visit"}>First Visit</option>
