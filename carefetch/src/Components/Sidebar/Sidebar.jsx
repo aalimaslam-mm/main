@@ -9,7 +9,8 @@ import { Outlet } from 'react-router-dom';
 // import { imgSrc } from "../../assets/bg-login.jpg";
 import { ImLab } from "react-icons/im"
 import { RxAvatar } from "react-icons/rx";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiSolidReport } from "react-icons/bi";
+import { GiTestTubes } from "react-icons/gi"
 export default function Sidebar() {
 
     let [hovered, setHovered] = useState(false);
@@ -81,12 +82,21 @@ export default function Sidebar() {
                 },
                 {
                     text: "Patients",
-                    link: "/patients",
+                    link: "/lab-patients",
+                },
+                {
+                    text: "Create Test",
+                    link: "/create-test",
+                    icon: <GiTestTubes />
+                }, {
+                    text: "Reports",
+                    link: "/reports",
+                    icon: <BiSolidReport />
                 },
                 {
                     text: "Appointments",
                     icon: <SlCalender />,
-                    link: "/appointments"
+                    link: "/lab-appointments"
                 },
                 {
                     text: "Logout",

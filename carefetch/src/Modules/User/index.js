@@ -1,3 +1,4 @@
+import CareFetch from "../CareFetch";
 import CareFetchAPI from "../CareFetch";
 class User {
     getToken() {
@@ -57,6 +58,16 @@ class User {
     }
     getRefreshToken() {
         return localStorage.getItem("refreshToken");
+    }
+    deleteUserById(id, callBack) {
+        CareFetch({
+            method: "delete",
+            url: `user/${id}`
+        }).then(response => {
+            callBack(response.data)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 }
 

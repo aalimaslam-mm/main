@@ -12,7 +12,9 @@ export default function Signup() {
             password: password.value,
             confirmPassword: confirmPassword.value,
             dateOfBirth: dateOfBirth.value,
-            userType: 'patient'
+            userType: 'patient',
+            address: e.target.address.value,
+            phone: e.target.phone.value
         }
         let response = await Auth.register(data);
         if (response === "success") {
@@ -40,6 +42,7 @@ export default function Signup() {
                                 <p className="text-muted text-center"> Please fill in this form to create an account!</p>
                                 <input type="text" name="name" placeholder="Username" className="px-3 py-2 rounded outline-none form-control my-1" />
                                 <input type="email" name="email" placeholder="Email" className="px-3 py-2 rounded outline-none form-control my-1" />
+                                <input type="tel" name="phone" placeholder="Phone Number" className="px-3 py-2 rounded outline-none form-control my-1" pattern="[0-9]{10}" required />
                                 <input type="password" name="password" placeholder="Password" className="px-3 py-2 rounded outline-none form-control my-1" />
                                 <input type="password" name="confirmPassword" placeholder="Confirm Password" className="px-3 py-2 rounded outline-none form-control my-1" onChange={handlePasswordChange} />
                                 {/* minimum age should be 16 */}
@@ -47,6 +50,7 @@ export default function Signup() {
                                     <label htmlFor="dob"> Date of Birth</label>
                                     <input type="date" max="2006-12-30" name="dateOfBirth" placeholder="Date of Birth" id="dob" className="px-3 py-2 d-block" />
                                 </div>
+                                <textarea name="address" placeholder="Address" className="px-3 py-2 rounded outline-none form-control my-1" />
                                 <input type="submit" className="btn btn-success w-100" name="" value="Register" />
                             </form>
                             <div className='my-4 d-flex'>

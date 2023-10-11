@@ -45,6 +45,40 @@ class Doctor {
         })
     }
 
+    getDoctorById(id, callBack) {
+        CareFetch({
+            method: "GET",
+            url: `doctors/${id}`
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+
+    updateDoctor(id, data, callBack) {
+        CareFetch({
+            method: "PUT",
+            url: `doctors/${id}`,
+            data
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+    softDeleteDoctor(id, callBack) {
+        CareFetch({
+            method: "delete",
+            url: "doctors/" + id,
+            data: { deleteType: "soft" }
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
 }
 
 export default new Doctor();
