@@ -5,6 +5,7 @@ import PatientModule from "../Modules/Patients";
 import { toast } from "react-toastify";
 import Doctors from "../Modules/Doctors";
 import HospitalModule from "../Modules/Hospitals";
+import Labs from "../Modules/Labs";
 /* eslint-disable react/prop-types */
 export default function Home() {
     let user = User.getUser();
@@ -95,21 +96,32 @@ function Appointments({ dataLength }) {
 
 // User
 function UserDashboard({ details, type }) {
-    let navigate = useNavigate()
-    let [appointments, setAppointments] = useState([])
+    let [appointments, setAppointments] = useState([]);
     useEffect(() => {
-        PatientModule.getAllAppointments((response) => {
-            if (response?.response?.status == 401) return navigate("/logout");
-            setAppointments(response?.data)
+        Labs.getAllAppointments((response) => {
+            setAppointments(response?.data);
         })
-    }, [navigate]);
+    }, [])
     return (
         <div className="p-4">
             <h1>{type} Dashboard</h1>
             {type.toLowerCase() == 'patient' ? (<Appointments />) : null}
+            {type.toLowerCase() == 'lab' ? (<LabTestAppointments appointments={appointments} />) : null}
         </div>
     )
+}
 
+function LabTestAppointments({ appointments }) {
+    return (
+        <div className="card col-md-5 col-12 my-4 border-1">
+            <Link to="/appointments" style={{ textDecoration: "none" }} state={{ from: "lab" }}>
+                <div className="card-body">
+                    <div className="card-title h4">Lab Test Appointments</div>
+                    <div className="card-text h2">{appointments?.length}</div>
+                </div>
+            </Link>
+        </div>
+    )
 }
 
 

@@ -102,9 +102,13 @@ function Card({ data }) {
 
             </div>
             {user?.UserType == "patient" ? (
-
                 <div className="card-footer">
                     <button type="button" className="btn btn-new">Book an appointment</button>
+                </div>
+            ) : null}
+            {user?.UserType == "hospital" ? (
+                <div className="card-footer">
+                    <Link to={`/hospital/doctor`} state={{ id: data?.DoctorID }} className="btn btn-new">View</Link>
                 </div>
             ) : null}
         </div>
