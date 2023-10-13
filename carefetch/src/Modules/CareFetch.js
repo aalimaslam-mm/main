@@ -21,16 +21,16 @@ const CareFetch = (config) => {
             return response;
         },
         function (error) {
-            if (error.response.data == "Invalid Token") {
+            if (error?.response?.data == "Invalid Token") {
                 Auth.logout();
             }
-            if (!error.response) {
+            if (!error?.response) {
                 error.response = {
                     data: "INETRNAL SERVER ERROR",
                     status: 500,
                 };
             }
-            if (error.response.status === 401) {
+            if (error?.response?.status === 401) {
                 Auth.logout();
                 throw error;
             }

@@ -2,7 +2,6 @@ import CareFetch from "../CareFetch";
 import User from "../User";
 class Patient {
     id = User?.getUser()?.HospitalID
-
     async getAllAppointments(callBack) {
         CareFetch({
             method: "GET",

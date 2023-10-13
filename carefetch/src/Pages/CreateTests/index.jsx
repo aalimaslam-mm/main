@@ -86,13 +86,20 @@ export default function Index() {
             toast.success("Test Deleted Successfully");
         })
     }
+    const handleSearch = (e) => {
+        let value = e?.target?.value;
+        if (value == "") return fetchMedicalTests();
+        let filteredTests = medicalTests.filter((test) => test.Name.toLowerCase().includes(value.toLowerCase()));
+        if (filteredTests.length == 0) return setMedicalTests([]);
+        setMedicalTests(filteredTests);
+    }
 
     return (
         <>
             <div className='mx-4'>
                 <div className='h3'>Tests</div>
                 <div className="my-3">
-                    <input type="search" className="form-control" placeholder="Search" />
+                    <input type="search" className="form-control" placeholder="Search" onChange={handleSearch} />
                 </div>
                 <button className='btn btn-outline-info rounded-1 mt-2' onClick={openDialog}>Add a Test</button>
                 <div className='my-4'>

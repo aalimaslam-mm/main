@@ -72,23 +72,8 @@ function Stats({ dataLength }) {
 function Appointments({ dataLength }) {
     return (
         <div className="my-5">
-            <h3>Appointments</h3>
-            <div className="row">
-                <div className="col-md-4 col-12">
-                    <Link to="/appointments" style={{ textDecoration: "none" }} state={{ from: "hospital" }}>
-                        <div className="card p-4" style={{ background: "rgba(150, 100,255,0.2)" }}>
-                            {dataLength?.totalAppointments} Hospital Appointments
-                        </div>
-                    </Link>
-                </div>
-                <div className="col-md-4 col-12">
-                    <Link to="/appointments" style={{ textDecoration: "none" }} state={{ from: "lab" }}>
-                        <div className="card p-4" style={{ background: "rgba(150, 100,255,0.2)" }}>
-                            {dataLength?.totalLabAppointments} Lab Appointments
-                        </div>
-                    </Link>
-                </div>
-            </div>
+
+
         </div>
     )
 }

@@ -22,6 +22,7 @@ import ViewLab from "./Pages/ViewLab";
 import CreateTest from "./Pages/CreateTests"
 import LabPatients from "./Pages/Patients/LabPatients";
 import LabAppointments from "./Pages/Appointments/LabAppointment";
+import Reports from "./Pages/Reports"
 function App() {
   let [loggedIn, setLoggedIn] = useState(false);
   let navigate = useNavigate()
@@ -55,6 +56,7 @@ function App() {
           <Route path="create-test" element={<CreateTest />} />
           <Route path="lab-patients" element={<LabPatients />} />
           <Route path="lab-appointments" element={<LabAppointments />} />
+          <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />

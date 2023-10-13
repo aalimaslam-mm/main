@@ -63,10 +63,15 @@ export default function Sidebar() {
                     link: "/labs"
                 },
                 {
-                    text: "Appointments",
-                    icon: <SlCalender />,
-                    link: "/appointments"
+                    text: "Reports",
+                    icon: <BiSolidReport />,
+                    link: "/reports"
                 },
+                // {
+                //     text: "Appointments",
+                //     icon: <SlCalender />,
+                //     link: "/appointments"
+                // },
                 {
                     text: "Logout",
                     icon: <BiLogOut />,
@@ -80,10 +85,10 @@ export default function Sidebar() {
                     icon: <AiFillHome />,
                     link: "/"
                 },
-                {
-                    text: "Patients",
-                    link: "/lab-patients",
-                },
+                // {
+                //     text: "Patients",
+                //     link: "/lab-patients",
+                // },
                 {
                     text: "Create Test",
                     link: "/create-test",

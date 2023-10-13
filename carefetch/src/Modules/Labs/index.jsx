@@ -111,7 +111,7 @@ class Labs {
     getPatients(id, callBack) {
         CareFetch({
             method: "get",
-            url: "get-patients/" + id
+            url: "labs/get-patients/" + id
         }).then(response => {
             callBack(response)
         }).catch(err => {
@@ -127,6 +127,61 @@ class Labs {
             callBack(response)
         }).catch(err => {
             callBack(err)
+        })
+    }
+    getAllReports(id, callBack) {
+        CareFetch({
+            method: "GET",
+            url: "labs/get-reports/" + id
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+    addReport(data, callBack) {
+        CareFetch({
+            method: "POST",
+            url: "labs/add-report",
+            data,
+            Headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+    downloadReport(id, callBack) {
+        CareFetch({
+            method: "GET",
+            url: "labs/download-report/" + id,
+            responseType: "blob"
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+    deleteReport(id, callBack) {
+        CareFetch({
+            method: "DELETE",
+            url: "labs/delete-report/" + id
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
+    getReportByPatientId(id, callBack) {
+        CareFetch({
+            method: "get",
+            url: 'labs/patient/reports/' + id
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            console.log(err)
         })
     }
 }

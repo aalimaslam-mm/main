@@ -43,11 +43,21 @@ export default function LabAppointment() {
             fetchData();
         })
     }
+    const handleSearch = (e) => {
+        let value = e?.target?.value;
+        if (value == "") return;
+        let filtered = appointments.filter((item) => item?.name?.toLowerCase().includes(value?.toLowerCase()))
+        if (filtered.length === 0) {
+            setAppointments([]);
+            return;
+        }
+        setAppointments(filtered)
+    }
     return (
         <div className="mx-4">
             <h1>LabAppointment</h1>
             <div>
-                <input type="search" className="form-control" placeholder="Search" />
+                <input type="search" className="form-control" placeholder="Search" onChange={handleSearch} />
                 {/* <button className='btn btn-outline-primary'>Add Appointment</button> */}
             </div>
             <div className="d-flex gap-3 my-3">
@@ -98,7 +108,7 @@ export default function LabAppointment() {
                                             <option value="Pending" selected={item?.Status.toLowerCase() == "pending"}>Pending</option>
                                             <option value="Approved" selected={item?.Status.toLowerCase() == "approved"}>Approved</option>
                                             <option value="Rejected" selected={item?.Status.toLowerCase() == "rejected"}>Rejected</option>
-                                            <option value="Completed" selected={item?.Status.toLowerCase() == "completed"}>Completed</option>
+                                            {/* <option value="Completed" selected={item?.Status.toLowerCase() == "completed"}>Completed</option> */}
                                         </select>
                                     </td>
                                 </tr>
