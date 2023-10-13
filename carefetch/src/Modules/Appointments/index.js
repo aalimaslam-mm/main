@@ -6,7 +6,7 @@ class Appointment {
     getAllAppointments(callback) {
         CareFetch({
             method: "get",
-            url: "/appointments/" + this.hospitalId,
+            url: "hospitals/appointments/" + this.hospitalId,
         })
             .then((response) => {
                 callback(response);

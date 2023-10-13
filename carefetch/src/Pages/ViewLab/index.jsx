@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Labs from '../../Modules/Labs';
 import { toast } from 'react-toastify';
+import User from '../../Modules/User';
 export default function Index() {
     let location = useLocation();
     let [currentLab, setCurrentLab] = React.useState({})
@@ -11,6 +12,10 @@ export default function Index() {
     let [selectedMedicalTest, setSelectedMedicalTest] = React.useState({});
     React.useEffect(() => {
         setCurrentLab(location.state);
+        fetchData();
+    }, [])
+
+    function fetchData() {
         Labs.getAllMedicalTests(location.state.LabID, (response) => {
             if (response?.response?.status === 401) {
                 window.location.reload();
@@ -19,8 +24,7 @@ export default function Index() {
             }
             setMedicalTests(response.data);
         })
-    }, [location])
-
+    }
 
     function handleHomeCollection(e) {
         e.preventDefault();
@@ -42,6 +46,8 @@ export default function Index() {
                 window.location.reload();
             }
             toast.success("Home Collection Requested Successfully");
+            fetchData();
+            setOpenHomeCollection(false);
         })
     }
 
@@ -49,8 +55,30 @@ export default function Index() {
         setOpenHomeCollection(!openHomeCollection);
         setSelectedMedicalTest(test);
     }
-    function toggleOfflineAppointment() {
+    function toggleOfflineAppointment(test) {
         setOpenOfflineAppointment(!openOfflineAppointment);
+        setMedicalTests(test)
+
+        let check = confirm("Are you sure you want to request offline appointment for this test?");
+        if (!check) return;
+
+        let data = {
+            labId: currentLab?.LabID,
+            testID: test?.TestID,
+            patientId: User.getUser().PatientID,
+            status: "Pending",
+            type: "Offline Appointment"
+        }
+
+        Labs.addHomeCollection(data, (response) => {
+            if (response?.response?.status === 401) {
+                window.location.reload();
+            }
+            toast.success("Offline Appointment Requested Successfully");
+            fetchData()
+        })
+
+
     }
 
     return (
@@ -69,7 +97,7 @@ export default function Index() {
                             <div className='card-body text-muted'>{test?.Description}</div>
                             <div className='card-footer d-flex gap-3 flex-wrap'>
                                 <button className='btn btn-outline-info w-100' onClick={() => toggleHomeCollection(test)}>Home Collection</button>
-                                <button className='btn btn-outline-success w-100'>Offline Appointment</button>
+                                <button className='btn btn-outline-success w-100' onClick={() => toggleOfflineAppointment(test)}>Offline Appointment</button>
                             </div>
                             <HomeCollection open={openHomeCollection} closeDialog={() => setOpenHomeCollection(false)} handleHomeCollection={handleHomeCollection} />
                         </div>
