@@ -1,20 +1,26 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HospitalModule from "../Modules/Hospitals"
 import User from '../Modules/User';
 import { toast } from 'react-toastify';
+import Doctor from './Doctors/index';
 
 export default function Hospital() {
     let [open, setOpen] = React.useState(false);
     let location = useLocation();
     let [hospital, setHospital] = React.useState(null);
     let [data, setData] = React.useState({});
+    let [doctors, setDoctors] = React.useState(null);
     React.useLayoutEffect(() => {
         HospitalModule.getHospitalById(location.state.HospitalID, (response) => {
-            setHospital(response.data);
+            setHospital((prev) => response.data);
         })
     }, [location.state.HospitalID]);
+
+    React.useEffect(() => {
+        fetchDoctors();
+    }, [hospital?.HospitalID])
 
     const handleChange = (e) => {
         setData({
@@ -55,10 +61,15 @@ export default function Hospital() {
         })
     }
 
+    function fetchDoctors() {
+        HospitalModule.getDoctorsByHospitalId(hospital?.HospitalID, (response) => {
+            setDoctors(response.data)
+        });
+    }
+
     return (
         <div className='p-4'>
             <div className="row p-4 rounded-1" style={{ backgroundColor: "rgba(255,100,200,0.2)", }}>
-
                 <div className='col-9'>
 
                     <div className='h1'>{hospital?.Name}</div>
@@ -85,10 +96,62 @@ export default function Hospital() {
                 }
             </div>
             <EditDialog open={open} closeDialog={() => setOpen(false)} data={hospital} handleChange={handleChange} handleSubmit={handleSubmit} />
+
+            {/* doctor cards start here  */}
+            <h1 className='mt-5'>Our Doctors</h1>
+            <div className='d-flex gap-4 flex-wrap'>
+
+                {
+                    doctors?.length > 0 ? (
+                        doctors?.map((doctor, index) => {
+                            return <Card data={doctor} key={index} />
+                        })
+                    ) : (<h2>We Don&rsquo;t Have any Doctors Available</h2>)
+
+                }
+            </div>
+            {/* <Card /> */}
+
         </div>
     )
 }
 
+
+
+function Card({ data }) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    return (
+        <>
+            <div className="card mt-2" style={{ width: "18rem" }} >
+                <div className="card-body">
+                    <h5 className="card-title" style={{ color: '#00767a' }}>Dr {data?.name}</h5>
+                    <h6 className="card-subtitle mb-2">{data?.Specialization}</h6>
+                    <h6 style={{ color: "#00767a" }}>₹{data?.fee}</h6>
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">{data?.available_days}</li>
+                        <li className="list-group-item">{data?.fromTime.split(":")[0]}:{data?.fromTime.split(":")[1]} - {data?.toTime.split(":")[0]}:{data?.toTime.split(":")[1]}</li>
+
+                    </ul>
+                    {
+                        user?.UserType == "hospital" ? (
+                            <div className="card-footer text-center">
+                                <Link to={`/hospital/doctor`} state={{ id: data?.DoctorID }} className="card-link" style={{ textDecoration: 'none' }}>View Details</Link>
+                            </div>
+                        ) : ""
+                    }
+                    {
+                        user?.UserType == "patient" ? (
+                            <div className="card-footer text-center">
+                                <button className="card-link btn btn-default" style={{ textDecoration: 'none' }}>Book an Appointment</button>
+                            </div>
+                        ) : ""
+                    }
+                </div>
+            </div>
+
+        </>
+    )
+}
 
 function EditDialog({ open, closeDialog, handleChange, handleSubmit, data }) {
     return (

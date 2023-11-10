@@ -4,6 +4,7 @@ import Doctors from '../../Modules/Doctors'
 import { toast } from 'react-toastify';
 import User from '../../Modules/User';
 import { Link } from 'react-router-dom';
+import "./Card.css"
 
 export default function Index() {
     let [doctors, setDoctors] = React.useState([]);
@@ -90,30 +91,39 @@ export default function Index() {
 function Card({ data }) {
     let user = JSON.parse(localStorage.getItem("user"));
     return (
-        <div className="card m-4" style={{ width: "18rem" }}>
-            <div className="card-body">
-                <h5 className="card-title">Dr. {data?.name}</h5>
-                <h6 className="card-title text-muted">{data?.Specialization}</h6>
-                <h6 className='tw-bold'>&#8377; {data?.fee}</h6>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Monday, Wednesday, Friday</li>
-                    <li className="list-group-item">5pm - 7pm</li>
-                </ul>
+        <>
+            <div className="card mt-5" style={{ width: "18rem" }} >
+                <div className="card-body">
+                    <h5 className="card-title" style={{ color: '#00767a' }}>Dr {data?.name}</h5>
+                    <h6 className="card-subtitle mb-2">{data?.Specialization}</h6>
+                    <h6 style={{ color: "#00767a" }}>₹{data?.fee}</h6>
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">{data?.available_days}</li>
+                        <li className="list-group-item">{data?.fromTime.split(":")[0]}:{data?.fromTime.split(":")[1]} - {data?.toTime.split(":")[0]}:{data?.toTime.split(":")[1]}</li>
 
+                    </ul>
+                    {
+                        user?.UserType == "hospital" ? (
+                            <div className="card-footer text-center">
+                                <Link to={`/hospital/doctor`} state={{ id: data?.DoctorID }} className="card-link" style={{ textDecoration: 'none' }}>View Details</Link>
+                            </div>
+                        ) : ""
+                    }
+                    {
+                        user?.UserType == "patient" ? (
+                            <div className="card-footer text-center">
+                                <a href="#" className="card-link" style="text-decoration: none; ">Book an Appointment</a>
+                            </div>
+                        ) : ""
+                    }
+                </div>
             </div>
-            {user?.UserType == "patient" ? (
-                <div className="card-footer">
-                    <button type="button" className="btn btn-new">Book an appointment</button>
-                </div>
-            ) : null}
-            {user?.UserType == "hospital" ? (
-                <div className="card-footer">
-                    <Link to={`/hospital/doctor`} state={{ id: data?.DoctorID }} className="btn btn-new">View</Link>
-                </div>
-            ) : null}
-        </div>
+
+        </>
     )
 }
+
+
 
 function BookAppointment({ data, open }) {
     return (

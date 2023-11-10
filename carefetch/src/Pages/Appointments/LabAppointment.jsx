@@ -3,6 +3,7 @@ import Labs from '../../Modules/Labs';
 import { toast } from 'react-toastify';
 
 export default function LabAppointment() {
+    let [allAppointment, setAllAppointment] = React.useState([]);
     let [appointments, setAppointments] = React.useState([]);
     React.useEffect(() => {
         document.title = "Lab Appointments";
@@ -12,7 +13,20 @@ export default function LabAppointment() {
     function handleToShow(e) {
 
         if (e.target.innerText.toLowerCase() === "all") return fetchData();
-        let filteredAppointments = appointments.filter((item) => item.Status.toLowerCase() === e.target.innerText.toLowerCase())
+
+        if (e.target.innerText.toLowerCase() === "offline appointment") {
+            let filteredAppointments = allAppointment.filter((item) => item.appType.toLowerCase() === e.target.innerText.toLowerCase())
+            if (filteredAppointments.length === 0) {
+                toast.error("No Appointments Found");
+                setAppointments([]);
+                return;
+            }
+            setAppointments(filteredAppointments)
+            return;
+        }
+
+
+        let filteredAppointments = allAppointment.filter((item) => item.Status.toLowerCase() === e.target.innerText.toLowerCase())
         if (filteredAppointments.length === 0) {
             toast.error("No Appointments Found");
             setAppointments([]);
@@ -28,7 +42,9 @@ export default function LabAppointment() {
             if (response?.response?.status === 404) {
                 return;
             }
-            setAppointments(response.data)
+            let filtered = response.data.filter((item) => item?.appType.toLowerCase() !== "offline appointment")
+            setAppointments(filtered)
+            setAllAppointment(response.data)
         })
     }
     function handleStatusChange(id, e) {
@@ -66,6 +82,7 @@ export default function LabAppointment() {
                 <button className="btn btn-outline-info rounded-1" onClick={handleToShow}>Pending</button>
                 <button className="btn btn-outline-info rounded-1" onClick={handleToShow}>Rejected</button>
                 <button className="btn btn-outline-info rounded-1" onClick={handleToShow}>Completed</button>
+                <button className="btn btn-outline-info rounded-1" onClick={handleToShow}>Offline Appointment</button>
             </div>
             <table className="table table-striped mt-5 me-5">
                 <thead className="table-dark">
@@ -74,6 +91,7 @@ export default function LabAppointment() {
                         <td>Patient Name</td>
                         <td>Contact Number</td>
                         <td>Address</td>
+                        <td>Type</td>
                         <td>Test Name</td>
                         <td>Status</td>
                     </tr>
@@ -100,17 +118,23 @@ export default function LabAppointment() {
                                 <tr key={index}>
                                     <td className='align-middle'>{index + 1}</td>
                                     <td className='align-middle'>{item.name}</td>
-                                    <td className='align-middle'>{item?.contactNumber}</td>
-                                    <td className='align-middle'>{item?.address}</td>
+                                    <td className='align-middle'>{item?.ContactNumber}</td>
+                                    <td className='align-middle'>{item?.Address}</td>
+                                    <td className='align-middle'>{item?.appType}</td>
                                     <td className='align-middle'>{item.Name}</td>
-                                    <td className='align-middle'>
-                                        <select className='form-control' onChange={(e) => handleStatusChange(item?.TestAppointmentID, e)}>
-                                            <option value="Pending" selected={item?.Status.toLowerCase() == "pending"}>Pending</option>
-                                            <option value="Approved" selected={item?.Status.toLowerCase() == "approved"}>Approved</option>
-                                            <option value="Rejected" selected={item?.Status.toLowerCase() == "rejected"}>Rejected</option>
-                                            {/* <option value="Completed" selected={item?.Status.toLowerCase() == "completed"}>Completed</option> */}
-                                        </select>
-                                    </td>
+                                    {
+                                        item.appType.toLowerCase() === "offline appointment" ? "" : (
+
+                                            <td className='align-middle'>
+                                                <select className='form-control' onChange={(e) => handleStatusChange(item?.TestAppointmentID, e)}>
+                                                    <option value="Pending" selected={item?.Status.toLowerCase() == "pending"}>Pending</option>
+                                                    <option value="Approved" selected={item?.Status.toLowerCase() == "approved"}>Approved</option>
+                                                    <option value="Rejected" selected={item?.Status.toLowerCase() == "rejected"}>Rejected</option>
+                                                    {/* <option value="Completed" selected={item?.Status.toLowerCase() == "completed"}>Completed</option> */}
+                                                </select>
+                                            </td>
+                                        )
+                                    }
                                 </tr>
                             </>
                         )) : <h5>No Appointments Found</h5>

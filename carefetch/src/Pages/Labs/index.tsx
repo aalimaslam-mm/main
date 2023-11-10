@@ -4,7 +4,7 @@ import { BiPlus, BiPlusCircle } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 import User from '../../Modules/User';
 import { Link } from 'react-router-dom';
-
+import "./lab.css"
 export default function Index() {
     const [labs, setLabs] = React.useState([]);
     const [open, setOpen] = React.useState(false);
@@ -126,16 +126,30 @@ export default function Index() {
                 <div className='row gap-4'>
                     {labs.length > 0 ? labs.map((lab, index) => (
                         <div className="col-12 col-md-3 card my-3" key={index}>
-                            <div className='card-body'>
+                            {/* <div className='card-body'>
                                 <h5 className='card-title'>{lab?.Name}</h5>
                                 <p className='card-text my-0'>Contact Number : {lab?.ContactNumber}</p>
                                 <p className='card-text my-0'>Email : {lab?.Email}</p>
                                 <p className='card-text my-0'>Address : {lab?.Address}</p>
                                 <p className='card-text my-0'>Description : {lab?.Description}</p>
+                            </div> */}
+                            <div className="card-body">
+                                <h1 className="plus">+</h1>
+                                <h5 className="card-title ms-3 mt-4" style={{ color: '#00767a' }}>{lab?.Name}</h5>
+                                <ul className="list-group list-group-flush mt-5 ">
+                                    <li className="list-group-item">{lab?.Email}</li>
+                                    <li className="list-group-item">{lab?.Address}</li>
+                                </ul>
+                                <div className="card-text text-center">
+                                    {/* <p>we are providing best offline and online lab services, we provide the positive results</p>
+                                     */}
+                                    <p className="list-group-item">{lab?.Description}</p>
+                                </div>
                             </div>
+
                             {User.getUser()?.UserType != "Admin" ? (
-                                <div className="card-footer">
-                                    <Link to="/view-lab" state={lab} className='btn btn-outline-primary'>View</Link> &nbsp; &nbsp;
+                                <div className="card-footer text-center mt-2">
+                                    <Link to="/view-lab" state={lab} className='btn btn-outline-primary w-100'>View</Link> &nbsp; &nbsp;
                                 </div>
                             ) : null}
                             {

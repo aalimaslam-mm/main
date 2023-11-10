@@ -71,8 +71,8 @@ export default function Index() {
 }
 function Card({ data, from }) {
     return (
-        <div className="card col-md-6 col-lg-3 col-12 mt-3 z-0">
-            <div className="card-body">
+        <div className="card col-md-6 col-lg-4 col-12 mt-3 z-0">
+            {/* <div className="card-body">
                 <h5 className="card-title">{data.Name ? data.Name : data.name}</h5>
                 <h5 className="text-muted h6">{data.Specialization ? data.Specialization : null} Doctors</h5>
                 {data.fee ? (<h5 className="text-muted h6">{data.fee} &#8377;</h5>) : null}
@@ -82,8 +82,27 @@ function Card({ data, from }) {
                     {data?.speciality ? <p className="my-0">Speciality : {data?.speciality}</p> : null}
                     {data?.Address ? (<p className="mb-3">Address : {data?.Address}</p>) : null}
                 </div>
-                {from == "hospitals" ? (<Link to="/hospital" state={data} className="btn btn-primary px-4 rounded-1">Check out</Link>) : (<Link to="/" className="btn btn-primary rounded-1 px-4" state={data}>Book Appointment</Link>)}
+            </div> */}
+
+            <div className="card-body">
+                <h1 className="plus">+</h1>
+                <h5 className="card-title mt-4 ms-3" style={{ color: '#00767a' }}>{data.Name ? data.Name : data.name}</h5>
+
+                <ul className="list-group list-group-flush mt-3">
+                    <li className="list-group-item">{data?.speciality}</li>
+                    <li className="list-group-item">{data?.ContactNumber}</li>
+                    <li className="list-group-item">{data.Address}</li>
+                    <li className="list-group-item">{data.Description}</li>
+                </ul>
+
+                <div className="card-footer text-center mt-2">
+                    {from == "hospitals" ? (<Link to="/hospital" state={data} className="btn btn-primary px-4 rounded-1">Check out</Link>) : (<Link to="/" className="btn btn-primary rounded-1 px-4" state={data}>Book Appointment</Link>)}
+                </div>
+
+
             </div>
+
+
         </div>
     )
 }

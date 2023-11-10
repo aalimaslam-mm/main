@@ -56,10 +56,12 @@ export default function Index() {
         let name = e?.target?.TestName?.value;
         let cost = e?.target?.Cost?.value;
         let description = e?.target?.Description?.value;
+        let homeCollection = e?.target?.homeCollection?.value;
         let data = {
             name,
             cost,
-            description
+            description,
+            homeCollection
         };
         let id = User.getUser().UserID;
         Labs.addMedicalTest(id, data, (response) => {
@@ -109,6 +111,7 @@ export default function Index() {
                                 <th>Test Name</th>
                                 <th>Cost</th>
                                 <th>Description</th>
+                                <th>Home Collection</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -119,6 +122,13 @@ export default function Index() {
                                         <td><input data-key={test?.TestID} type="text" disabled={true} defaultValue={test?.Name} className='form-control' name="name" /></td>
                                         <td><input data-key={test?.TestID} type="number" disabled={true} defaultValue={test?.Cost} className='form-control' name="cost" /></td>
                                         <td><input data-key={test?.TestID} type='text' disabled={true} defaultValue={test?.Description} className='form-control' name="description" /></td>
+                                        <td>
+                                            <select data-key={test?.TestID} name="homeCollection" className='form-control' disabled={true} >
+                                                <option selected={!test?.homeCollection} disabled>Select an Option</option>
+                                                <option value="true" selected={test?.homeCollection == "true"}>Yes</option>
+                                                <option value="false" selected={test?.homeCollection == "false"}>No</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <button type="submit" className='btn btn-outline-info rounded-1 me-2' onClick={(e) => toggleChangeReq(e, test.TestID)}>Edit</button>
                                             <button className='btn btn-outline-danger rounded-1' onClick={() => deleteTest(test.TestID)}>Delete</button>
@@ -158,6 +168,15 @@ function AddDialog({ open, closeDialog, handleSubmit }) {
                             <div className='form-group'>
                                 <label htmlFor="Description">Description</label>
                                 <input type="text" className="form-control" id="Description" />
+                            </div>
+
+                            <div className='form-group mb-4'>
+                                <label htmlFor="Description">Home Collection Available</label>
+                                <select name="homeCollection" className='form-control' >
+                                    <option disabled selected>Select an Option</option>
+                                    <option value={true} >Yes</option>
+                                    <option value={false}>No</option>
+                                </select>
                             </div>
                             <div className='form-group'>
                                 <button type="button" className='btn btn-outline-danger rounded-1' onClick={closeDialog}>Close</button>
