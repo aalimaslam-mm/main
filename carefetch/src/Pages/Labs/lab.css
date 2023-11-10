@@ -1,0 +1,19 @@
+.card-title {
+    color: #005f63;
+    font-weight: bold;
+}
+
+.card-subtitle {
+    color: #298a8d;
+}
+
+.plus {
+    font-size: 8rem;
+    font-weight: 800;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    opacity: 0.2;
+    line-height: 50px;
+
+}

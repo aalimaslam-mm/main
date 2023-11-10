@@ -66,6 +66,16 @@ class Hospital {
             callBack(err)
         })
     }
+    getDoctorsByHospitalId(id, callBack) {
+        CareFetch({
+            method: "get",
+            url: `/doctors/hospital/${id}`,
+        }).then((response) => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
 }
 
 export default new Hospital();

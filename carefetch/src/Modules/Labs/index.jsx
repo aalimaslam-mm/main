@@ -184,5 +184,19 @@ class Labs {
             console.log(err)
         })
     }
+    addBulkAppointment(miss, appointments, callBack) {
+        CareFetch({
+            method: "POST",
+            url: "labs/add-bulk-appointment",
+            data: {
+                miss,
+                appointments
+            }
+        }).then(response => {
+            callBack(response)
+        }).catch(err => {
+            callBack(err)
+        })
+    }
 }
 export default new Labs();
