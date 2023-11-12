@@ -78,7 +78,8 @@ export default function Index() {
     function deleteTest(id) {
         let check = confirm("Are you sure you want to delete this test?");
         if (!check) return;
-        Labs.deleteTest(id, (response) => {
+        let labId = User.getUser().LabID;
+        Labs.deleteTest({ id, labId }, (response) => {
             if (response?.response?.status === 401) {
                 window.location.reload();
             } else if (response?.response?.status === 404) {

@@ -5,6 +5,7 @@ import { BsPencil } from 'react-icons/bs';
 import Dialog from './ProfileDialog';
 import { toast } from 'react-toastify';
 import { RxAvatar } from "react-icons/rx"
+import axios from 'axios';
 export default function Index() {
     let [user, setUser] = React.useState({});
     const [open, setOpen] = React.useState(false);
@@ -15,7 +16,21 @@ export default function Index() {
 
     React.useEffect(() => {
         setUser(User.getUser());
+        if (User.getUser().UserType == "hospital") {
+            fetchSubscriptionDetails()
+        }
     }, [])
+
+    function fetchSubscriptionDetails() {
+        let userId = User.getUser().UserID;
+        let data = axios.get(`http://localhost:5503/get-subscription/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            console.log(response)
+        })
+    }
 
     const onClose = () => {
         setOpen(false)
@@ -151,6 +166,17 @@ export default function Index() {
             <div className="p-4 d-flex justify-content-center">
                 <button className='btn btn-warning' onClick={() => setChangePasswordDialogS(true)}>Change Password</button>
             </div>
+            {
+                user.UserType == "hospital" ? (
+                    <div className='position-absolute bottom-2'>
+                        <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
+
+                        </div>
+                    </div>
+                ) : null
+            }
+
+
             <ChangePasswordDialog open={changePasswordDialogS} closeDialog={() => setChangePasswordDialogS(false)} handleChange={handlePasswordChange} handleSubmit={handlePasswordSubmit} />
         </section>
     )

@@ -45,12 +45,12 @@ export default function Index() {
     return (
         <>
             <div className="row">
-                <div className='col-10'>
+                <div className='col-12'>
                     <div>{hospitals.data != "No Hospitals Found" ? (
                         <div className="p-4">
                             <div>
-                                <h3>Hospitals</h3>
-                                <div className='cards-container'>
+                                <h3 className='text-center'>Hospitals</h3>
+                                <div className='cards-container d-flex flex-wrap gap-5 mt-5 justify-content-center' style={{ zIndex: -111111222 }}>
                                     {hospitals?.data?.map((data, index) => {
                                         return <Card data={data} key={index} from="hospitals" />
                                     })}
@@ -71,7 +71,7 @@ export default function Index() {
 }
 function Card({ data, from }) {
     return (
-        <div className="card col-md-6 col-lg-4 col-12 mt-3 z-0">
+        <div className="card col-md-6 col-lg-3 col-12 mt-3 z-0" style={{ zIndex: -111111222 }}>
             {/* <div className="card-body">
                 <h5 className="card-title">{data.Name ? data.Name : data.name}</h5>
                 <h5 className="text-muted h6">{data.Specialization ? data.Specialization : null} Doctors</h5>
@@ -90,9 +90,9 @@ function Card({ data, from }) {
 
                 <ul className="list-group list-group-flush mt-3">
                     <li className="list-group-item">{data?.speciality}</li>
-                    <li className="list-group-item">{data?.ContactNumber}</li>
+                    {/* <li className="list-group-item">{data?.ContactNumber}</li>
                     <li className="list-group-item">{data.Address}</li>
-                    <li className="list-group-item">{data.Description}</li>
+                    <li className="list-group-item">{data.Description}</li> */}
                 </ul>
 
                 <div className="card-footer text-center mt-2">
@@ -154,6 +154,13 @@ function Dialog({ open, closeDialog, handleChange, handleSubmit }) {
                                     <option value="Kidney" />
                                     <option value="Lungs" />
                                 </datalist>
+                            </div>
+
+                            <div className="form-group">
+                                <select className='form-control' name="plan">
+                                    <option value="Basic Plan"> Basic Plan </option>
+                                    <option value="Annual Plan"> Annual Plan </option>
+                                </select>
                             </div>
 
                             <div className='my-3 d-flex col-12 gap-2'>

@@ -90,7 +90,11 @@ class Labs {
     deleteTest(id, callBack) {
         CareFetch({
             method: "DELETE",
-            url: "labs/delete-test/" + id
+            url: "labs/delete-test/" + id.id,
+            data: {
+                id: id.id,
+                labId: id.labId
+            }
         }).then(response => {
             callBack(response)
         }).catch(err => {
@@ -196,6 +200,17 @@ class Labs {
             callBack(response)
         }).catch(err => {
             callBack(err)
+        })
+    }
+    getReportsLength(callBack) {
+        let user = JSON.parse(localStorage.getItem("user"))
+        CareFetch({
+            method: "GET",
+            url: "labs/reports-length/" + user.PatientID
+        }).then(response => {
+            callBack(response);
+        }).catch(err => {
+            console.log(err);
         })
     }
 }
