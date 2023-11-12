@@ -123,7 +123,7 @@ export default function Index() {
                     <button className='btn btn-primary my-4 rounded-1 d-flex justify-content-center align-items-center' onClick={openDialog}><BiPlusCircle style={{ fontSize: "18px" }} /> &nbsp;Add Lab</button>
                 ) : null
                 }
-                <div className='row gap-4'>
+                <div className='row gap-4 justify-content-center mt-5'>
                     {labs.length > 0 ? labs.map((lab, index) => (
                         <div className="col-12 col-md-3 card my-3" key={index}>
                             {/* <div className='card-body'>

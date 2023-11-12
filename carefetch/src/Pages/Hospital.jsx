@@ -69,7 +69,7 @@ export default function Hospital() {
 
     return (
         <div className='p-4'>
-            <div className="row p-4 rounded-1" style={{ backgroundColor: "rgba(255,100,200,0.2)", }}>
+            {/* <div className="row p-4 rounded-1" style={{ backgroundColor: "rgba(255,100,200,0.2)", }}>
                 <div className='col-9'>
 
                     <div className='h1'>{hospital?.Name}</div>
@@ -94,11 +94,54 @@ export default function Hospital() {
                         <button className='btn btn-outline-danger' onClick={handleDelete}>Delete Hospital</button>
                     </div>) : null
                 }
-            </div>
+            </div> */}
+
+            <section className="body-bg  w-75  p-5 m-auto">
+                <div className="container">
+                    <h1 className="text-center">Welcome To {hospital?.Name}</h1>
+                    <h6 className="card-subtitle text-center">{hospital?.speciality} Hospital</h6>
+                    <div className="row mt-5 justify-content-evenly">
+                        <div className="col-6 d-flex align-items-center">
+                            <p>
+                                {hospital?.Description}
+                            </p>
+                        </div>
+
+                        <div className="col-4">
+                            <div className="card" style={{ width: '24rem' }}>
+                                <div className="card-body">
+                                    <h5 className="card-title text-center">Hospital Details</h5>
+
+                                    <ul className="list-group list-group-flush">
+                                        <li className="list-group-item">Location -
+                                            <p> {hospital?.Address} </p></li>
+                                        <li className="list-group-item">Contact -
+                                            <p> Phone: {hospital?.ContactNumber}</p>
+                                            <p> Email: {hospital?.Email}</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </section>
+
+
+
+
+
+
+
+
             <EditDialog open={open} closeDialog={() => setOpen(false)} data={hospital} handleChange={handleChange} handleSubmit={handleSubmit} />
 
             {/* doctor cards start here  */}
-            <h1 className='mt-5'>Our Doctors</h1>
+            <h1 className='my-5 text-center'>Our Doctors</h1>
             <div className='d-flex gap-4 flex-wrap'>
 
                 {

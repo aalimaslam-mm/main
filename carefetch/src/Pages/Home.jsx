@@ -72,8 +72,26 @@ function Stats({ dataLength }) {
 function Appointments({ dataLength }) {
     return (
         <div className="my-5">
+            <div className="card-container d-flex gap-4">
+                {/* 
+                <div className="card col-md-2 col-12">
+                    <div className="card-body">
+                        <div className="card-title">
+                            {dataLength?.data?.pending}
+                        </div>
+                        <div className="card-subtitle">Pending Reports</div>
+                    </div>
+                </div> */}
+                <div className="card col-md-2 col-12">
+                    <div className="card-body">
 
-
+                        <div className="card-title">
+                            {dataLength?.data?.sent}
+                        </div>
+                        <div className="card-subtitle">Recieved Reports</div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
@@ -82,15 +100,23 @@ function Appointments({ dataLength }) {
 // User
 function UserDashboard({ details, type }) {
     let [appointments, setAppointments] = useState([]);
+    let [dataLength, setDataLength] = useState({});
     useEffect(() => {
         Labs.getAllAppointments((response) => {
             setAppointments(response?.data);
         })
+        fetchDataLength()
     }, [])
+    function fetchDataLength() {
+        Labs.getReportsLength((response) => {
+            setDataLength(response.data)
+        })
+    }
+
     return (
         <div className="p-4">
-            <h1>{type} Dashboard</h1>
-            {type.toLowerCase() == 'patient' ? (<Appointments />) : null}
+            <h1>{type.charAt(0).toUpperCase() + type.slice(1)} Dashboard</h1>
+            {type.toLowerCase() == 'patient' ? (<Appointments dataLength={dataLength} />) : null}
             {type.toLowerCase() == 'lab' ? (<LabTestAppointments appointments={appointments} />) : null}
         </div>
     )

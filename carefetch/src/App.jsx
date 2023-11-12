@@ -22,7 +22,9 @@ import ViewLab from "./Pages/ViewLab";
 import CreateTest from "./Pages/CreateTests"
 import LabPatients from "./Pages/Patients/LabPatients";
 import LabAppointments from "./Pages/Appointments/LabAppointment";
-import Reports from "./Pages/Reports"
+import Reports from "./Pages/Reports";
+import ResetPassowrd from "./Pages/ResetPassword";
+import ForgotPassword from "./Pages/ForgotPassword"
 function App() {
   let [loggedIn, setLoggedIn] = useState(false);
   let navigate = useNavigate()
@@ -30,7 +32,7 @@ function App() {
     let loggedInP = protectRoute();
     setLoggedIn(loggedInP);
     if (!loggedIn) {
-      if (window.location.pathname !== "/login" && window.location.pathname !== "/register" && window.location.pathname !== "/logout") {
+      if (window.location.pathname !== "/login" && window.location.pathname !== "/register" && window.location.pathname !== "/logout" && window.location.pathname !== "/reset" && window.location.pathname !== "/forgot") {
         navigate("/login");
       }
     }
@@ -59,6 +61,8 @@ function App() {
           <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="/register" element={<Signup />} />
+        <Route path="/reset" element={<ResetPassowrd />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
